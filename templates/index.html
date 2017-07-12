@@ -1,5 +1,47 @@
 {% extends 'base.html' %}
+{% load static from staticfiles%}
 
 {% block body %}
-    
+    <section class="main" style="height: 100%">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <!--logo-->
+                    <div class="logo"><img src="{% static 'img/logo.png' %}" alt="logo"></div>
+                    <!--logo end-->
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!--welcome-message-->
+                    <header class="welcome-message text-center">
+                        <h1><span class="rotate">欢迎来到菜鸟产品分析平台</span></h1>
+                    </header>
+                    <!--welcome-message end-->
+
+                    <!--sub-form-->
+                    <div class="sub-form text-center">
+                        <div class="row">
+                            <div class="col-md-5 center-block col-sm-8 col-xs-11">
+                                <form role="form" id="mc-form">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="请输入您要查询的产品" required value="" name="product">
+                                        <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default" id="mc-subscribe" value="Subscribe" name="subscribe">搜一下</button>
+                  </span></div>
+                                </form>
+                                <p id="mc-notification"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--sub-form end-->
+
+                </div>
+            </div>
+        </div>
+    </section>
+
 {% endblock %}
