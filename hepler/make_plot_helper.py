@@ -9,7 +9,7 @@ import pandas as pd
 
 mpl.rcParams['font.sans-serif'] = ['SimHei']    # 显示中文
 mpl.rcParams['font.serif'] = ['SimHei']         # 显示中文
-mpl.rcParams['axes.unicode_minus'] = False      # 图像是负号'-'显示为方块的问题
+mpl.rcParams['axes.unicode_minus'] = False      # 负号'-'正常显示
 
 def make_comment_plot(datas):
     """

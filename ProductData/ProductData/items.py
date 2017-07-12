@@ -26,6 +26,7 @@ class ProductdataItem(scrapy.Item):
     p_title = scrapy.Field()
     p_c_score = scrapy.Field()
     p_img = scrapy.Field()
+    p_id = scrapy.Field()
     p_prices = scrapy.Field()
     p_c_all_nums = scrapy.Field()
     p_comments = scrapy.Field()

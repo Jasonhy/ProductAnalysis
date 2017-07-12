@@ -4,19 +4,20 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
-import codecs
 import json
+from .spiders import sql_hepler
 
 class ProductdataPipeline(object):
-    def __init__(self):
-        self.filename = codecs.open('product_info.json','w',encoding='utf8')
 
     def process_item(self, item, spider):
-        product_info = json.dumps(dict(item),ensure_ascii=False) + "\n"
-        self.filename.write(product_info)
-
+        """
+        将数据保存到redis
+        :param item:
+        :param spider:
+        :return:
+        """
+        item = dict(item)
+        product_info = json.dumps(dict(item),ensure_ascii=False)
+        sql_hepler.save_to_redis(item['p_id'],data=product_info)
         return item
 
-    def spider_closed(self,spider):
-
-        self.filename.close()

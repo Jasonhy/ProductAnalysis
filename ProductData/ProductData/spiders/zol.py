@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
+import re
 
 import scrapy
 from scrapy import Request
@@ -67,6 +68,8 @@ class ZolSpider(scrapy.Spider):
         p_urls = response.xpath("//div[@class='pic-mode-box']/ul/li/a/@href").extract()
         p_titles = response.xpath("//div[@class='pic-mode-box']/ul/li/h3/a/text()").extract()
         p_scores = response.xpath("//div[@class='comment-row']/span[@class='score']/text()").extract()
+        li = response.xpath("//div[@class='pic-mode-box']/ul/li").get()
+        p_id = int(re.findall(r'<li data-follow-id="p(\d+)">', li)[0])
 
         try:
             p_nums = len(p_urls)
@@ -74,7 +77,8 @@ class ZolSpider(scrapy.Spider):
                 product_info = {
                     'p_url':self.base_url + p_urls[i],
                     'p_title':p_titles[i],
-                    'p_c_score':p_scores[i]
+                    'p_c_score':p_scores[i],
+                    'p_id':p_id
                 }
 
                 yield Request(
@@ -132,6 +136,7 @@ class ZolSpider(scrapy.Spider):
         p_c_all_nums
         p_comments
         p_c_times
+        p_id
         """
         product_info = response.meta
 
@@ -141,8 +146,9 @@ class ZolSpider(scrapy.Spider):
         item['p_c_score'] = product_info['p_c_score']
         item['p_prices'] = product_info['p_prices']
         item['p_img'] = product_info['p_img']
-        item['p_c_all_nums'] = p_c_all_nums
-        item['p_comments'] = p_comments
+        item['p_id'] = product_info['p_id']
+        item['p_c_all_nums'] = "".join(p_c_all_nums)
+        item['p_comments'] = "".join(p_comments).replace(" ","").replace("\r\n","")
         item['p_c_times'] = p_c_times
 
         yield item
