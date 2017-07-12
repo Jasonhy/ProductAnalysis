@@ -68,14 +68,19 @@ class ZolSpider(scrapy.Spider):
         p_urls = response.xpath("//div[@class='pic-mode-box']/ul/li/a/@href").extract()
         p_titles = response.xpath("//div[@class='pic-mode-box']/ul/li/h3/a/text()").extract()
         p_scores = response.xpath("//div[@class='comment-row']/span[@class='score']/text()").extract()
-        li = response.xpath("//div[@class='pic-mode-box']/ul/li").get()
-        p_id = int(re.findall(r'<li data-follow-id="p(\d+)">', li)[0])
 
         try:
             p_nums = len(p_urls)
             for i in range(p_nums):
+                p_url = p_urls[i]
+                res = re.findall(r'(\d+)', p_url)
+                if len(res) > 0:
+                    p_id = res[-2]
+                else:
+                    p_id = res[-1]
+
                 product_info = {
-                    'p_url':self.base_url + p_urls[i],
+                    'p_url':self.base_url + p_url,
                     'p_title':p_titles[i],
                     'p_c_score':p_scores[i],
                     'p_id':p_id
