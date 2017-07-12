@@ -3,7 +3,7 @@ from . import models
 # Register your models here.
 
 class ProductInfoAdmin(admin.ModelAdmin):
-    list_display = ('p_title','p_c_score','p_c_good_nums','p_c_mid_nums','p_c_bad_nums')
+    list_display = ('p_title','p_c_score','p_id')
 
 class ProductCommentTimeAdmin(admin.ModelAdmin):
     list_display = ('p_info_id','p_c_time')

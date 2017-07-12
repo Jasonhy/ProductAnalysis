@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-import json
 import logging
 import re
 
 import scrapy
 from scrapy import Request
+
+from .. import config,log_helper
 from ..items import ProductdataItem
-
-from . import config,log_helper
-
 
 class ZolSpider(scrapy.Spider):
     name = 'zol'
@@ -106,7 +104,7 @@ class ZolSpider(scrapy.Spider):
         """
         comment_url = "".join(response.xpath("//ul[@class='nav']/li/a[@class='ol-comment']/@href").extract())
         p_img = "".join(response.xpath("//div[@class='bigpic']/a/img/@src").extract())
-        p_prices = response.xpath("//div[@class='product-merchant-price clearfix']/ul/li/span/a/text()").extract()
+        p_prices = response.xpath("//div[@class='product-merchant-price clearfix']/ul/li/strong/a/text() | //div[@class='product-merchant-price clearfix']/ul/li/span/a/text()").extract()
 
         response.meta['p_img'] = p_img
         response.meta['p_prices'] = p_prices
@@ -149,7 +147,7 @@ class ZolSpider(scrapy.Spider):
         item['p_url'] = product_info['p_url']
         item['p_title'] = product_info['p_title']
         item['p_c_score'] = product_info['p_c_score']
-        item['p_prices'] = product_info['p_prices']
+        item['p_prices'] = "".join(product_info['p_prices'])
         item['p_img'] = product_info['p_img']
         item['p_id'] = product_info['p_id']
         item['p_c_all_nums'] = "".join(p_c_all_nums)
