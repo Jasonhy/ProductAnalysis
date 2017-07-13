@@ -5,11 +5,10 @@ from . import config
 from .sql_hepler import SqlHelper
 import json
 
-p_redis = redis.StrictRedis(host=config.redis_host, port=config.redis_part,
-                                    db=config.redis_db, password=config.redis_pass)
+p_redis = redis.StrictRedis(host=config.redis_host, port=config.redis_port)
 p_sql = SqlHelper()
 
-def save_to_redis(item,save_to_mysql=True):
+def save_to_redis(item,save_to_mysql=False):
     """
     保存数据的redis
     :param data: 需要保存的数据

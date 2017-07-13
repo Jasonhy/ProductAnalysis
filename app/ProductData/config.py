@@ -29,6 +29,6 @@ headers = {
 
 # redis
 redis_pass = ''
-redis_host = 'localhost'
-redis_part = '6397'
+redis_host = '127.0.0.1'
+redis_port = '6379'
 redis_db = 10

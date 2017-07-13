@@ -42,18 +42,24 @@ class ZolSpider(scrapy.Spider):
             )
 
         # 对分页进行递归
-        all_page_num = int("".join(response.xpath("//div[@class='small-page']/span/text()").extract()).replace("/","").strip())
-        cur_page = int("".join(response.xpath("//div[@class='small-page']/span/b/text()").extract()).strip())
+        # all_page_num = int("".join(response.xpath("//div[@class='small-page']/span/text()").extract()).replace("/","").strip())
+        # cur_page = int("".join(response.xpath("//div[@class='small-page']/span/b/text()").extract()).strip())
 
         for p in page_urls:
             # 判断当前页和总页数的差值
-            if cur_page <= all_page_num:
-                yield Request(
-                    url=self.base_url + p,
-                    headers=config.headers,
-                    method='GET',
-                    callback=self.get_type_product,
-                )
+            # if cur_page <= all_page_num:
+            #     yield Request(
+            #         url=self.base_url + p,
+            #         headers=config.headers,
+            #         method='GET',
+            #         callback=self.get_type_product,
+            #     )
+            yield Request(
+                url=self.base_url + p,
+                headers=config.headers,
+                method='GET',
+                callback=self.get_type_product,
+            )
 
 
 
@@ -147,7 +153,7 @@ class ZolSpider(scrapy.Spider):
         item['p_url'] = product_info['p_url']
         item['p_title'] = product_info['p_title']
         item['p_c_score'] = product_info['p_c_score']
-        item['p_prices'] = "".join(product_info['p_prices'])
+        item['p_prices'] = "".join(product_info['p_prices']) if product_info['p_prices'] else "价格未知"
         item['p_img'] = product_info['p_img']
         item['p_id'] = product_info['p_id']
         item['p_c_all_nums'] = "".join(p_c_all_nums)

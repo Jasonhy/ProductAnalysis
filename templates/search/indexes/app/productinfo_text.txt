@@ -1,0 +1,2 @@
+{{ object.p_title }}
+{{ object.p_id }}

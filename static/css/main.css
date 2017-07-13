@@ -89,10 +89,10 @@ ul, li {
 }
 
 /* ------------------------------------------------------------------------------
-   Subscription form 
+   Search
 -------------------------------------------------------------------------------*/
    
- .form-control::-webkit-input-placeholder {
+.form-control::-webkit-input-placeholder {
  color: #727272;
  font-weight: 300;
 }
@@ -149,303 +149,26 @@ ul, li {
 	margin: .75em 0 0;
 	color: #FFF;
 }
-.alert, .success {
-	padding: .5em 1em;
-	border-radius: 4px;
-	display: inline-block;
-}
-.alert {
-	background-color: rgba(231, 76, 60, 0.7);
-}
-.success {
-	background-color: rgba(39, 174, 96, 0.7);
-}
-.alert i, .success i {
-	padding-right: .5em;
-}
-.fa-paper-plane {
-	padding-left: .5em;
-}
-/* ------------------------------------------------------------------------------
-   Countdown styles
--------------------------------------------------------------------------------*/
-   
-ul.countdown {
-	list-style: none;
-	display: block;
-	margin-bottom: 0;
-	padding: 1.5em 0 0;
-}
-.countdown p {
-	color: #fff;
-}
-ul.countdown li {
-	display: inline-block;
-}
-ul.countdown li span {
-	font-size: 27px;
-	font-weight:600;
-}
-ul.countdown li.seperator {
-	font-size: 30px;
-	vertical-align: top;
-	padding: 0 8px;
-}
-ul.countdown li p {
-	font-size: 13px;
-	margin-bottom: 0;
-	letter-spacing:3px;
-}
-/* ------------------------------------------------------------------------------
-   Social 
--------------------------------------------------------------------------------*/
-
-.social {
-	float: none;
-}
-.social li {
-	display: inline-block;
-	padding-right: .8em;
-}
-.social li:last-child {
-	padding-right: 0;
-}
-.social li a {
-	display: block;
-	width: 38px;
-	height: 38px;
-	line-height: 38px;
-	color: #fff;
-	border-radius: 50%;
-	background: #ff5335;
-	position: relative;
- -webkit-transition: all .8s ease;
- transition: all .8s ease;
-}
-.social li a:hover {
-	color: #fff;
-	background: #d92709;
-}
-/* ------------------------------------------------------------------------------
-   Features
--------------------------------------------------------------------------------*/
-   
-.section-spacing {
-	padding: 4.5em 0;
-}
-.features.section-spacing {
-	padding-bottom: 2.25em;
-}
-.features h2, .product-features h4 {
-	margin-top: 0;
-}
-.features h2 {
-	margin-bottom: 1.5em;
-	font-weight:700;
-	font-size:27px;
-	text-transform:uppercase;
-	letter-spacing:3px;
-}
-.product-features {
-	margin-bottom: 3em;
-}
-.product-features p {
-	margin-bottom: 0;
-	color: #888;
-}
-/* ------------------------------------------------------------------------------
-   Twitter feed
--------------------------------------------------------------------------------*/
-
 
 .center-block {
 	float: none;
 }
-.twitter-feed {
-	background: url(../img/bg-t.jpg) center center no-repeat fixed;
-	background-size: cover;
-	color: #fff;
-	position: relative;
-}
-.overlay-t {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: rgba(27, 32, 38, 0.8);
-	top: 0;
-}
-.twitter-feed h2, .contact h2 {
-	margin: 0;
-}
-.twitter-icon .fa-twitter {
-	color: #55ACEE;
-	padding: 24px 0 12px;
-	font-size: 3em;
-}
-/* ------------------------------------------------------------------------------
-   Contact
--------------------------------------------------------------------------------*/
- 
-.contact h2 {
-	margin-bottom: 1.5em;
-		font-weight:700;
-	font-size:27px;
-	text-transform:uppercase;
-	letter-spacing:3px;
-}
-.contact-form {
-	margin-top: 3em;
-}
-.contact-form .form-control {
-	border-color: #ddd;
-	margin-bottom: .75em;
-	padding: .75em 12px;
-}
-.contact-form label.error {
-	margin-bottom: 12px;
-	font-weight: 300;
-	color: #ea5050;
-}
-.contact .btn-default {
-	width: 100%;
-}
-/* ------------------------------------------------------------------------------
-   contact Form Validation
--------------------------------------------------------------------------------*/
-   
 
-.contact-form label.error i {
-	padding-right: 8px;
-}
-.success-cf, .error-cf {
-	display: none;
-}
-.success-cf p {
-	background: rgba(39, 174, 96, 0.7);
-}
-.error-cf p {
-	background: rgba(231, 76, 60, 0.7);
-}
-.contact-form {
-	position: relative;
-}
-.contact-form .success-cf p, .contact-form .error-cf p {
-	position: absolute;
-	display: block;
-	top: 40%;
-	left: 0;
-	right: 0;
-	text-align: center;
-	z-index: 10;
-	color: #fff;
-	border-radius: 2px;
-	padding: .75em;
-}
 /* ------------------------------------------------------------------------------
-   Map
+   sidebar
 -------------------------------------------------------------------------------*/
-.map {
-	position: relative;
-	box-shadow: 0 0 0 4px #fff;
-	border-radius: 2px;
+.sidebar .nav > li.active-pro{
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
 }
-#map-canvas {
-	width: 100%;
-	height: 320px;
-	margin: 0px;
-	padding: 0px
+.sidebar .nav > li.active-pro a{
+    background: rgba(255, 255, 255, 0.14);
+    opacity: 1;
+    color: #FFFFFF;
 }
-#map-canvas img {
-	max-width: none;
-}
-.address {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	background: rgba(255, 255, 255, 0.71);
-	color: #666;
-	padding: 1em;
-	margin: 0 0 .75em .75em;
-}
-.address li i {
-	padding-right: 8px;
-	color: #ff5335;
-}
-.address li {
-	padding-bottom: .5em;
-}
-.address li:last-child {
-	padding-bottom: 0;
-}
-/* ------------------------------------------------------------------------------
-   footer
--------------------------------------------------------------------------------*/
-   
-.site-footer {
-	background: #F1F1F1;
-}
-.site-footer.section-spacing {
-	padding: 4.5em 0;
-}
-.site-footer h3 {
-	margin: 0;
-}
-.site-footer .social {
-	float: none;
-	margin-bottom: 1.5em;
-}
-.site-footer small {
-	color: #888;
-}
-/* ------------------------------------------------------------------------------
-   scroll top
--------------------------------------------------------------------------------*/
-   
-.scroll-top {
-	margin-bottom: 0;
-}
-.scroll-top a {
-	position: fixed;
-	bottom: 2em;
-	right: 2em;
-	text-decoration: none;
-	color: #fff;
-	background-color: rgba(0, 0, 0, 0.3);
-	font-size: 12px;
-	padding: .8em 1em;
-	display: none;
-	z-index: 200;
-	border-radius: 5px;
- -webkit-transition: background .5s ease-in;
- transition: background .5s ease-in;
-}
-.scroll-top a:hover {
-	background: #ff5335;
-}
-/* ------------------------------------------------------------------------------
-   Preloader styles
--------------------------------------------------------------------------------*/
 
-#preloader {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: #fefefe;
-	z-index: 9999;
-	height: 100%;
-	height: 100%;
-}
-#status {
-	width: 200px;
-	height: 200px;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	background: url(../img/load.gif) no-repeat center center;
-	margin: -170px 0 0 -100px;
-}
+
 
 /* ------------------------------------------------------------------------------
    Small devices (tablets, 768px and up)

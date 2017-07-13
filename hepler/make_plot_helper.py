@@ -11,13 +11,13 @@ mpl.rcParams['font.sans-serif'] = ['SimHei']    # 显示中文
 mpl.rcParams['font.serif'] = ['SimHei']         # 显示中文
 mpl.rcParams['axes.unicode_minus'] = False      # 负号'-'正常显示
 
-def make_comment_plot(datas):
+def make_comment_plot(data):
     """
     生成好评率的饼图
     :param datas:
     :return:
     """
-    temps = datas[0]['p_comments']
+    temps = data['p_comments']
     temps = "".join(temps).replace(" ", "").replace("\r\n", "")
     values = re.findall(r'(\d+)', temps)
     c_values = [int(value) for value in values]
@@ -29,13 +29,13 @@ def make_comment_plot(datas):
     s.plot.pie(figsize=(8, 8), autopct='%0.2f', fontsize=20, colors=['g', 'y', 'r'])
 
 
-def make_overview_plot(datas):
+def make_overview_plot(data):
     """
     评价概览
     :param datas:
     :return:
     """
-    temps = "".join(datas[0]['p_c_all_nums'])
+    temps = "".join(data['p_c_all_nums'])
     values = re.findall(r'(\d+)', temps)
     c_values = [int(value) for value in values]
     c_keys = re.findall('[\u4e00-\u9fa5]+', temps)
@@ -43,13 +43,13 @@ def make_overview_plot(datas):
     s.plot.bar(figsize=(8, 8), fontsize=18)
 
 
-def make_hot_plot(datas):
+def make_hot_plot(data):
     """
     根据评价最近评价来判断这个产品是否是热门
     :param datas:
     :return:
     """
-    temp = datas[0]['p_c_times']
+    temp = data['p_c_times']
     dt1 = datetime.datetime.now()
     temp = list(set(temp))
     sub_dates = [(dt1 - datetime.datetime.strptime(dt, '%Y-%m-%d')).days for dt in temp]

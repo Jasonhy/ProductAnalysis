@@ -3,11 +3,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>菜鸟产品分析平台</title>
-    <meta name="description" content="Coming Soon Responsive Template">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <title>{% block title %}
+        菜鸟产品分析平台
+    {% endblock %}</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/light-bootstrap-dashboard.css' %}" rel="stylesheet">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
 </head>
@@ -19,13 +22,13 @@
 
     <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
     <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/wow.min.js' %}"></script>
-    <script src="{% static 'js/retina.min.js' %}"></script>
-    <script src="{% static 'js/tweetie.min.js' %}"></script>
-    <script src="{% static 'js/jquery.downCount.js' %}"></script>
-    <script src="{% static 'js/jquery.form.min.js' %}"></script>
-    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
     <script src="{% static 'js/jquery.simple-text-rotator.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+
+    {% block js %}
+
+    {% endblock %}
 </body>
 </html>
