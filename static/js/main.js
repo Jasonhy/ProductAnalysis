@@ -7,8 +7,8 @@ $(function() {
    ========================================================================== */
 
     $(".main").backstretch([
-        "img/bg-1.jpg",
-        "img/bg-2.jpg"
+        "/static/img/bg-1.jpg",
+        "/static/img/bg-2.jpg"
         
     ], {
         fade: 750,

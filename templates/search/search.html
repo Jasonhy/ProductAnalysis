@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static from staticfiles %}
+{% load product_tags %}
 
 {% block title %}
     搜索结果
@@ -18,15 +19,8 @@
 
                 <ul class="nav">
                     {% if query %}
-                        {% for result in page.object_list %}
-                            <li>
-                                <a href="javascript:void(0);" onclick="get_plot({{ result.object.p_id }},this)">{{ result.object.p_title }}</a>
-                            </li>
-                        {% empty %}
-                            <li>
-                                未找到相应的结果
-                            </li>
-                        {% endfor %}
+
+                        {% get_search_result_list page.object_list %}
 
                     {% endif %}
 
@@ -166,9 +160,27 @@
 
 {% block js %}
     <script>
+       $(function () {
+           $("#set_click").trigger('click');
+       });
        function get_plot(id,ele) {
            $(ele).parent().addClass('active');
            $(ele).parent().siblings().removeClass('active');
+           $.ajax({
+               url:'/make_plot/',
+               type:'POST',
+               data:{'p_id':id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'   // csrfmiddlewaretoken添加csrf_token
+               },
+               dataType:'JSON',
+               success:function (data) {
+                   if(data.status == 1){
+
+                   }else {
+
+                   }
+               }
+           })
        }
     </script>
 {% endblock %}

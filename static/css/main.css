@@ -136,6 +136,9 @@ ul, li {
  -webkit-transition: all .5s ease-out;
  transition: all .5s ease-out;
 	padding: 12px 1.5em;
+    height: 50px;
+    width: 100px;
+    font-size: 18px;
 }
 .btn-default:hover, .btn-default:focus, .btn-default:active {
 	color: #fff;
