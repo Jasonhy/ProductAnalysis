@@ -27,7 +27,8 @@ def make_comment_plot(data,p_id):
     s_sum = s.sum()
     s = s.apply(lambda x: x / s_sum)
     s.plot.pie(figsize=(6, 8), autopct='%0.2f', fontsize=8, colors=['g', 'y', 'r'])
-    plt.savefig("%s_c.png" % p_id)
+    plt.savefig("%s_c.png" % p_id,dpi=100)
+    plt.close()
 
 def make_overview_plot(data,p_id):
     """
@@ -42,7 +43,8 @@ def make_overview_plot(data,p_id):
     c_keys = re.findall('[\u4e00-\u9fa5]+', temps)
     s = pd.Series(c_values, index=c_keys)
     s.plot.bar(figsize=(6, 8), fontsize=8)
-    plt.savefig("%s_o.png" % p_id)
+    plt.savefig("%s_o.png" % p_id,dpi=100)
+    plt.close()
 
 def make_hot_plot(data,p_id):
     """
@@ -50,8 +52,9 @@ def make_hot_plot(data,p_id):
     :param datas:
     :return:
     """
+    data = data.split(",")
     dt1 = datetime.datetime.now()
-    temp = list(set(data))
+    temp = list(set(data))[0:-2]
     sub_dates = [(dt1 - datetime.datetime.strptime(dt, '%Y-%m-%d')).days for dt in temp]
     actives = []
     for d in sub_dates:
@@ -68,5 +71,5 @@ def make_hot_plot(data,p_id):
     }
     df = pd.DataFrame(date_dict, index=temp)
     df.plot(figsize=(10, 6), subplots=True)
-    plt.savefig("%s_h.png" % p_id)
+    plt.savefig("%s_h.png" % p_id,dpi=100)
 

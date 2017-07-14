@@ -12,14 +12,16 @@ class ProductdataItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     """
-    p_url
-    p_title
-    p_c_score
-    p_img
-    p_prices
-    p_c_all_nums
-    p_comments
-    p_c_times
+        p_url
+        p_title
+        p_c_score
+        p_img
+        p_prices
+        p_c_all_nums
+        p_comments
+        p_c_times
+        p_id
+        p_price_trend
     """
 
     p_url = scrapy.Field()
@@ -31,4 +33,5 @@ class ProductdataItem(scrapy.Item):
     p_c_all_nums = scrapy.Field()
     p_comments = scrapy.Field()
     p_c_times = scrapy.Field()
+    p_price_trend = scrapy.Field()
 

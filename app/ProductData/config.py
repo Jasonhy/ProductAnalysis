@@ -11,8 +11,7 @@ productanalysis_db_config = {
 productanalysis_db = 'productanalysis'
 
 product_info = 'product_info'
-product_comment_time = 'product_comment_time'
-product_analysis_image = 'product_analysis_image'
+
 
 # 请求的header
 headers = {
@@ -32,3 +31,5 @@ redis_pass = ''
 redis_host = '127.0.0.1'
 redis_port = '6379'
 redis_db = 10
+
+REDIS_PRODUCT_INFO_EXPIRES_SECONDES = 86400   # 设置存储过期时间,单位为秒

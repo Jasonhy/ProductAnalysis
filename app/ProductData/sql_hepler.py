@@ -11,14 +11,13 @@ class SqlHelper(object):
         self.cursor = self.conn.cursor()
         self.conn.select_db(config.productanalysis_db)
 
-    def insert_data(self,command,data):
-        try:
-            self.cursor.execute(command,data)
-            self.conn.commit()
-        except Exception as e:
-            log_helper.log(e,logging.WARNING)
-
     def insert_json(self,data={},table_name = None):
+        """
+        以json数据插入
+        :param data:
+        :param table_name:
+        :return:
+        """
         try:
             keys = []
             vals = []
@@ -35,8 +34,11 @@ class SqlHelper(object):
             self.cursor.execute(sql,tuple(vals))
             self.conn.commit()
 
+            return self.cursor.lastrowid
+
         except Exception as e:
             log_helper.log(e,logging.WARNING)
+            return -1
 
     def query_one(self,command,cursor_type = 'tuple'):
         try:
@@ -49,7 +51,16 @@ class SqlHelper(object):
             cursor.execute(command)
             data = cursor.fetchone()
             self.conn.commit()
+
             return data
         except Exception as e:
             log_helper.log(e,logging.WARNING)
             return None
+
+    def close(self):
+        """
+        关闭操作
+        :return:
+        """
+        self.cursor.close()
+        self.conn.close()

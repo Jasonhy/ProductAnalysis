@@ -12,56 +12,17 @@ class ZolSpider(scrapy.Spider):
     name = 'zol'
     allowed_domains = ['detail.zol.com.cn']
     base_url = "http://detail.zol.com.cn"
-    url = base_url + "/subcategory.html"
+    urls = ["/notebook_index/subcate16_0_list_1_0_1_2_0_1.html","/cell_phone_index/subcate57_0_list_1_0_1_2_0_1.html","/digital_camera_index/subcate15_0_list_1_0_1_2_0_1.html"]
 
     def start_requests(self):
-        yield Request(
-            url=self.url,
-            headers=config.headers,
-            method='GET',
-            callback=self.get_type_product,
-        )
 
-    def get_type_product(self,response):
-        """
-        获取分类类别
-        :param response:
-        :return:
-        """
-        type_urls = response.xpath("//div[@class='subcate-list']/a/@href").extract()
-        page_urls = response.xpath("//div[@class='pagebar']/a/@href").extract()
-
-        for type_url in type_urls:
-            # 对每一个url发送请求
-
+        for url in self.urls:
             yield Request(
-                url=self.base_url + type_url,
+                url=self.base_url + url,
                 headers=config.headers,
                 method='GET',
                 callback=self.get_product_list,
             )
-
-        # 对分页进行递归
-        # all_page_num = int("".join(response.xpath("//div[@class='small-page']/span/text()").extract()).replace("/","").strip())
-        # cur_page = int("".join(response.xpath("//div[@class='small-page']/span/b/text()").extract()).strip())
-
-        for p in page_urls:
-            # 判断当前页和总页数的差值
-            # if cur_page <= all_page_num:
-            #     yield Request(
-            #         url=self.base_url + p,
-            #         headers=config.headers,
-            #         method='GET',
-            #         callback=self.get_type_product,
-            #     )
-            yield Request(
-                url=self.base_url + p,
-                headers=config.headers,
-                method='GET',
-                callback=self.get_type_product,
-            )
-
-
 
     def get_product_list(self,response):
         """
@@ -73,29 +34,39 @@ class ZolSpider(scrapy.Spider):
         p_titles = response.xpath("//div[@class='pic-mode-box']/ul/li/h3/a/text()").extract()
         p_scores = response.xpath("//div[@class='comment-row']/span[@class='score']/text()").extract()
 
+        # 执行分页
+        p_pages = response.xpath("//div[@class='pagebar']/a/@href").extract()
+
         try:
             p_nums = len(p_urls)
-            for i in range(p_nums):
-                p_url = p_urls[i]
+            for p_url in p_urls:
+                # p_url = p_urls[i]
                 res = re.findall(r'(\d+)', p_url)
-                if len(res) > 0:
+                if len(res) > 1:
                     p_id = res[-2]
                 else:
                     p_id = res[-1]
 
                 product_info = {
                     'p_url':self.base_url + p_url,
-                    'p_title':p_titles[i],
-                    'p_c_score':p_scores[i],
                     'p_id':p_id
                 }
 
                 yield Request(
-                    url=self.base_url + p_urls[i],
+                    url=self.base_url + p_url,
                     headers=config.headers,
                     method='GET',
                     meta=product_info,
                     callback=self.get_product_info,
+                )
+
+            for p in p_pages:
+                # 分页回调
+                yield Request(
+                    url=self.base_url + p,
+                    headers=config.headers,
+                    method='GET',
+                    callback=self.get_product_list,
                 )
 
         except Exception as e:
@@ -108,12 +79,22 @@ class ZolSpider(scrapy.Spider):
         :param response:
         :return:
         """
+        p_title = "".join(response.xpath("//div[@class='page-title clearfix']/h1/text()").extract())
+        p_c_score = "".join(response.xpath("//div[@class='product-comment']/div/div/div/strong/text()").extract())
         comment_url = "".join(response.xpath("//ul[@class='nav']/li/a[@class='ol-comment']/@href").extract())
         p_img = "".join(response.xpath("//div[@class='bigpic']/a/img/@src").extract())
         p_prices = response.xpath("//div[@class='product-merchant-price clearfix']/ul/li/strong/a/text() | //div[@class='product-merchant-price clearfix']/ul/li/span/a/text()").extract()
+        # 格式 ['[["7.08","7.09","7.10","7.11","7.14"],[2999,2999,2999,2999,2999],2999,2999]']
+
+        p_price_trend = response.xpath("//div[@class='product-price-info']/div/span/b[@class='price-type price-retain']/@chart-data").extract()
+        if p_price_trend:
+            p_price_trend = p_price_trend[0]
 
         response.meta['p_img'] = p_img
+        response.meta['p_title'] = p_title
+        response.meta['p_c_score'] = p_c_score
         response.meta['p_prices'] = p_prices
+        response.meta['p_price_trend'] = p_price_trend
 
         yield Request(
             url=self.base_url + comment_url,
@@ -146,6 +127,7 @@ class ZolSpider(scrapy.Spider):
         p_comments
         p_c_times
         p_id
+        p_price_trend
         """
         product_info = response.meta
 
@@ -158,7 +140,8 @@ class ZolSpider(scrapy.Spider):
         item['p_id'] = product_info['p_id']
         item['p_c_all_nums'] = "".join(p_c_all_nums)
         item['p_comments'] = "".join(p_comments).replace(" ","").replace("\r\n","")
-        item['p_c_times'] = p_c_times
+        item['p_c_times'] = ",".join(p_c_times)
+        item['p_price_trend'] = product_info['p_price_trend']
 
         yield item
 

@@ -50,6 +50,12 @@
                     </div>
                 </div>
             </nav>
+            <img src="{% static 'uploads/1156607_c.png' %}">
+            <img src="{% static 'uploads/1156607_o.png' %}">
+            <br>
+            <img src="{% static 'uploads/1156607_h.png' %}">
+            <br>
+
 
             <div class="content">
                 <div class="container-fluid">
@@ -61,7 +67,9 @@
                                     <p class="category">Last Campaign Performance</p>
                                 </div>
                                 <div class="content">
-                                    <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+                                    <div id="chartPreferences">
+                                        <img src="{% static 'uploads/1156607_c.png' %}">
+                                    </div>
 
                                     <div class="footer">
                                         <div class="legend">
@@ -127,28 +135,6 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="card ">
-                                <div class="header">
-                                    <h4 class="title">2014 Sales</h4>
-                                    <p class="category">All products including Taxes</p>
-                                </div>
-                                <div class="content">
-                                    <div class="ct-chart"></div>
-
-                                    <div class="footer">
-                                        <div class="legend">
-                                            <i class="fa fa-circle text-info"></i> Tesla Model S
-                                            <i class="fa fa-circle text-danger"></i> BMW 5 Series
-                                        </div>
-                                        <hr>
-                                        <div class="stats">
-                                            <i class="fa fa-check"></i> Data information certified
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -166,21 +152,21 @@
        function get_plot(id,ele) {
            $(ele).parent().addClass('active');
            $(ele).parent().siblings().removeClass('active');
-           $.ajax({
-               url:'/make_plot/',
-               type:'POST',
-               data:{'p_id':id,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'   // csrfmiddlewaretoken添加csrf_token
-               },
-               dataType:'JSON',
-               success:function (data) {
-                   if(data.status == 1){
-
-                   }else {
-
-                   }
-               }
-           })
+{#           $.ajax({#}
+{#               url:'/make_plot/',#}
+{#               type:'POST',#}
+{#               data:{'p_id':id,#}
+{#                    csrfmiddlewaretoken: '{{ csrf_token }}'   // csrfmiddlewaretoken添加csrf_token#}
+{#               },#}
+{#               dataType:'JSON',#}
+{#               success:function (data) {#}
+{#                   if(data.status == 1){#}
+{##}
+{#                   }else {#}
+{##}
+{#                   }#}
+{#               }#}
+{#           })#}
        }
     </script>
 {% endblock %}
