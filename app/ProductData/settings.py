@@ -14,12 +14,20 @@ BOT_NAME = 'ProductData'
 SPIDER_MODULES = ['ProductData.spiders']
 NEWSPIDER_MODULE = 'ProductData.spiders'
 
+# 使用了scrapy-redis里的去重组件，不使用scrapy默认的去重
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+# 使用了scrapy-redis里的调度器组件，不实用scrapy默认的调度器
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# 使用队列形式
+SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderQueue"
+# 允许暂停，redis请求记录不丢失
+SCHEDULER_PERSIST = True
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'ProductData (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -89,6 +97,9 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
+
 # 代理IP
 PROXIES = [
     {'ip_port': '119.29.126.115:80'},
@@ -101,3 +112,4 @@ PROXIES = [
     {'ip_port': '183.56.177.130:808'},
     {'ip_port': '111.155.124.73	8123'},
 ]
+

@@ -4,6 +4,8 @@ import re
 
 import scrapy
 from scrapy import Request
+# 使用redis去重
+from scrapy.dupefilters import RFPDupeFilter
 
 from .. import config,log_helper
 from ..items import ProductdataItem
@@ -84,16 +86,20 @@ class ZolSpider(scrapy.Spider):
         comment_url = "".join(response.xpath("//ul[@class='nav']/li/a[@class='ol-comment']/@href").extract())
         p_img = "".join(response.xpath("//div[@class='bigpic']/a/img/@src").extract())
         p_prices = response.xpath("//div[@class='product-merchant-price clearfix']/ul/li/strong/a/text() | //div[@class='product-merchant-price clearfix']/ul/li/span/a/text()").extract()
+
+        # 参考价
+        p_price_retain = ",".join(response.xpath("//div[@class='product-price-info']/div/span/b[@class='price-type price-retain']/text()").extract())
         # 格式 ['[["7.08","7.09","7.10","7.11","7.14"],[2999,2999,2999,2999,2999],2999,2999]']
 
         p_price_trend = response.xpath("//div[@class='product-price-info']/div/span/b[@class='price-type price-retain']/@chart-data").extract()
+
         if p_price_trend:
             p_price_trend = p_price_trend[0]
 
         response.meta['p_img'] = p_img
         response.meta['p_title'] = p_title
         response.meta['p_c_score'] = p_c_score
-        response.meta['p_prices'] = p_prices
+        response.meta['p_prices'] = p_prices if p_prices else p_price_retain
         response.meta['p_price_trend'] = p_price_trend
 
         yield Request(
@@ -135,7 +141,7 @@ class ZolSpider(scrapy.Spider):
         item['p_url'] = product_info['p_url']
         item['p_title'] = product_info['p_title']
         item['p_c_score'] = product_info['p_c_score']
-        item['p_prices'] = "".join(product_info['p_prices']) if product_info['p_prices'] else "价格未知"
+        item['p_prices'] = "".join(product_info['p_prices']) if product_info['p_prices'] else "暂无报价"
         item['p_img'] = product_info['p_img']
         item['p_id'] = product_info['p_id']
         item['p_c_all_nums'] = "".join(p_c_all_nums)

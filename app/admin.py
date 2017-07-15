@@ -4,6 +4,7 @@ from . import models
 
 class ProductInfoAdmin(admin.ModelAdmin):
     list_display = ('p_title','p_c_score','p_id')
+    search_fields = ('p_id',)
 
 admin.site.register(models.ProductInfo,ProductInfoAdmin)
 
