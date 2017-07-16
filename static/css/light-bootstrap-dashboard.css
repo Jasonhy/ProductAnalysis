@@ -236,7 +236,10 @@ input:focus {
   color: #fff;
   font-weight: 200;
   background-size: cover;
+  background: linear-gradient(to bottom, #787878 0%, #343434 100%);
   background-position: center center;
+  opacity: 1;
+
 }
 .sidebar .sidebar-wrapper {
   position: relative;
@@ -296,7 +299,7 @@ input:focus {
   margin-top: 20px;
 }
 .sidebar .nav li > a {
-  color: #FFFFFF;
+  color: #fff;
   margin: 5px 15px;
   opacity: .86;
   border-radius: 4px;
@@ -366,7 +369,7 @@ body > .navbar-collapse .logo-tim img {
   width: 60px;
   height: 60px;
 }
-.sidebar:after, .sidebar:before,
+
 body > .navbar-collapse:after,
 body > .navbar-collapse:before {
   display: block;
@@ -378,12 +381,12 @@ body > .navbar-collapse:before {
   left: 0;
   z-index: 2;
 }
-.sidebar:before,
+
 body > .navbar-collapse:before {
   opacity: .33;
   background: #000000;
 }
-.sidebar:after,
+
 body > .navbar-collapse:after {
   background: #787878;
   background: -moz-linear-gradient(top, #787878 0%, #343434 100%);

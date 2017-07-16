@@ -171,7 +171,9 @@ ul, li {
     color: #FFFFFF;
 }
 
-
+.p-detail{
+    float: left;
+}
 
 /* ------------------------------------------------------------------------------
    Small devices (tablets, 768px and up)

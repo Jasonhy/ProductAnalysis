@@ -4,11 +4,11 @@ import json
 from hepler import make_plot_helper
 from app.models import ProductInfo
 from multiprocessing import Pool
-from hepler import redis_helper,log_helper
+from hepler import redis_helper, log_helper
 import logging
 
-def index(request):
 
+def index(request):
     return render(request, 'index.html')
 
 
@@ -25,7 +25,7 @@ def make_plot(request):
 
     images = []
     result = {
-        'status':1,
+        'status': 1,
     }
     """
     {
@@ -46,7 +46,7 @@ def make_plot(request):
     except Exception as e:
         res = None
     if res:
-        p_info = json.dumps(res.decode(encoding='utf-8'),ensure_ascii=False)
+        p_info = json.loads(res,encoding='utf8')
     else:
         try:
             product_info = ProductInfo.objects.get(p_id=p_id)
@@ -58,32 +58,30 @@ def make_plot(request):
             if not p_c_score:
                 p_c_score = "暂无评分"
             p_info = {
-                    "p_id":p_id,
-                    "p_url": p_url,
-                    "p_title": p_title,
-                    "p_img": p_img,
-                    "p_price": p_prices,
-                    "p_c_score": p_c_score
+                'p_id': p_id,
+                'p_url': p_url,
+                'p_title': p_title,
+                'p_img': p_img,
+                'p_price': p_prices,
+                'p_c_score': p_c_score
             }
-            images.append(pool.apply_async(make_plot_helper.make_comment_plot,args=(product_info.p_comments,p_id)))
-            images.append(pool.apply_async(make_plot_helper.make_overview_plot,args=(product_info.p_c_all_nums,p_id)))
-            images.append(pool.apply_async(make_plot_helper.make_hot_plot,args=(product_info.p_c_time,p_id)))
+            images.append(pool.apply_async(make_plot_helper.make_comment_plot, args=(product_info.p_comments, p_id)))
+            images.append(pool.apply_async(make_plot_helper.make_overview_plot, args=(product_info.p_c_all_nums, p_id)))
+            images.append(pool.apply_async(make_plot_helper.make_hot_plot, args=(product_info.p_c_time, p_id)))
             pool.close()
             pool.join()
 
-            p_info["p_analysis_imgs"] = [img.get() for img in images]
+            p_info['p_analysis_imgs'] = [img.get() for img in images]
 
             # 将数据保存到redis
             redis_helper.save_to_redis(p_info)
 
         except Exception as e:
-            result["error_msg"] = "暂无此产品"
-            result["status"] = 0
+            result['error_msg'] = "暂无此产品"
+            result['status'] = 0
             p_info = {}
-            log_helper.log(e,logging.WARNING)
-
+            log_helper.log(e, logging.WARNING)
 
     result['data'] = p_info
 
     return JsonResponse(result)
-

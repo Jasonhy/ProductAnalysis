@@ -28,7 +28,7 @@ def make_comment_plot(data,p_id):
         s = s[3:6]
         s_sum = s.sum()
         s = s.apply(lambda x: x / s_sum)
-        s.plot.pie(autopct='%0.2f', fontsize=8, colors=['g', 'y', 'r'])
+        s.plot.pie(autopct='%0.2f%%', fontsize=8, colors=['g', 'y', 'r'])
         plt.savefig("static/upload/%s_c.png" % p_id,dpi=90)
         plt.close()
 

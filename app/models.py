@@ -17,7 +17,7 @@ class ProductInfo(models.Model):
 
     p_c_all_nums = models.CharField(max_length=256,name='p_c_all_nums',verbose_name='概况点评内容',null=True,blank=True)
 
-    p_c_time = models.CharField(max_length=128, name='p_c_time', verbose_name='产品评论日期', null=True, blank=True)
+    p_c_time = models.CharField(max_length=256, name='p_c_time', verbose_name='产品评论日期', null=True, blank=True)
 
     p_price_trend = models.CharField(max_length=128,name='p_price_trend',verbose_name='价格趋势',null=True,blank=True)
 

@@ -6,12 +6,22 @@
     搜索结果
 {% endblock %}
 
-{% block extra %}
-    <style> body{background-attachment: fixed;} </style>
-{% endblock %}
 
 {% block body %}
     <div class="wrapper">
+        <!-- Modal -->
+        <div class="modal fade" id="loadModal" role="dialog" data-dismiss="modal">
+            <div class="modal-dialog">
+                <div class="modal-content text-center">
+                    <div class="modal-body">
+                        <img src="{% static 'gif/loading.gif' %}">
+                    </div>
+                    <div class="modal-footer text-center">
+                     数据正在分析中...
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="sidebar">
 
             <div class="sidebar-wrapper">
@@ -32,13 +42,13 @@
 
                 {% if query %}
                     {% if page.has_previous or page.has_next %}
-                        <div>
+                        <div class="pager">
                             {% if page.has_previous %}
-                                <a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; 上一页
+                                <a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %} 上一页
                             {% if page.has_previous %}</a>{% endif %}
                             |
                             {% if page.has_next %}
-                                <a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}下一页 &raquo;
+                                <a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}下一页
                             {% if page.has_next %}</a>{% endif %}
                         </div>
                     {% endif %}
@@ -50,27 +60,42 @@
             <nav class="navbar navbar-default navbar-fixed">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">瞄一瞄结果</a>
+                        <a class="navbar-brand">十万火急终于出来了</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="/index/"><p>返回首页</p></a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+
             </nav>
 
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                             <div class="card ">
-                                <div class="header">
-                                    <p class="category">华为</p>
+                            <div class="card ">
+                                <div class="clearfix content">
+                                    <div class="p-detail">
+                                        <a id="p-url">
+                                            <img id="p-pic">
+                                        </a>
+                                    </div>
+                                     <div class="p-detail">
+                                         <h3 id="p-title"></h3>
+                                         <p id="p-price"></p>
+                                         <p id="p-score"></p>
+                                     </div>
                                 </div>
-                                <div class="content">
-                                    1120
-                                </div>
+
                             </div>
 
-                             <div class="card">
+                            <div class="card">
                                 <div class="header">
-                                    <p class="category">评价总览</p>
+                                    <p class="category">评价总览:分析评价关键字所占的数量,纵坐标表示数量</p>
                                 </div>
                                 <div class="content">
                                     <img id="img-o">
@@ -81,7 +106,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="header">
-                                    <p class="category">好评率</p>
+                                    <p class="category">好评率:根据好中差的数量了进行统计</p>
                                 </div>
                                 <div class="content">
                                     <img id="img-c">
@@ -90,7 +115,7 @@
 
                             <div class="card ">
                                 <div class="header">
-                                    <p class="category">热度</p>
+                                    <p class="category">热度:按照最近的评价日期来分析当前产品是否还是热点话题</p>
                                 </div>
                                 <div class="content">
                                     <img id="img-h">
@@ -109,33 +134,60 @@
 
 {% block js %}
     <script>
-       $(function () {
-           $("#set_click").trigger('click');
-       });
-       function get_plot(id,ele) {
-           $(ele).parent().addClass('active');
-           $(ele).parent().siblings().removeClass('active');
-           $.ajax({
-               url:'/make_plot/',
-               type:'POST',
-               data:{'p_id':id,
+        $(function () {
+            $("#set_click").trigger('click');
+        });
+        function get_plot(id, ele) {
+            $(ele).parent().addClass('active');
+            $(ele).parent().siblings().removeClass('active');
+            $.ajax({
+                url: '/make_plot/',
+                type: 'POST',
+                data: {
+                    'p_id': id,
                     csrfmiddlewaretoken: '{{ csrf_token }}'   // csrfmiddlewaretoken添加csrf_token
-               },
-               dataType:'JSON',
-               success:function (data) {
-                   base_url = "http://127.0.0.1:8080";
-                   if(data.status == 1){
-                        product_info = data.data;
-                        p_imgs = product_info["p_analysis_imgs"];
-                        $("#img-c").attr('src',base_url + p_imgs[0]);
-                        $("#img-o").attr('src',base_url + p_imgs[1]);
-                        $("#img-h").attr('src',base_url + p_imgs[2]);
-                        console.log(p_imgs);
-                   }else {
-                        console.log("数据错误");
-                   }
-               }
-           })
-       }
+                },
+                dataType: 'JSON',
+                success: function (res) {
+                    var interval;
+                    try {
+                        data = JSON.parse(res.data);
+                        base_url = "http://127.0.0.1:8080/";
+                        if (res.status == 1) {
+                            $("#loadModal").trigger('click');
+                            clearInterval(interval);
+                            p_imgs = data["p_analysis_imgs"];
+                            $("#img-c").attr('src', base_url + p_imgs[0]);
+                            $("#img-o").attr('src', base_url + p_imgs[1]);
+                            $("#img-h").attr('src', base_url + p_imgs[2]);
+                            $("#p-pic").attr('src',data["p_img"]);
+                            $("#p-title").text(data['p_title']);
+                            $("#p-score").text("总评分: " + data['p_c_score']);
+                            $("#p-price").text("价格: " + data["p_price"]);
+                            $("#p-url").attr('href',data["p_url"]);
+                        } else {
+                            $("#loadModal").trigger('click');
+                            clearInterval(interval);
+                            alert(res.error_msg);
+                        }
+                    }catch (err){
+                        interval = setInterval(get_plot(id,ele), 1000);
+                    }
+                }
+            })
+        }
+
+        //模态加载框垂直居中
+        function centerModals() {
+            $('#loadModal').each(function (i) {
+                var $clone = $(this).clone().css('display', 'block').appendTo('body');
+                var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+                top = top > 0 ? top : 0;
+                $clone.remove();
+                $(this).find('.modal-content').css("margin-top", top);
+            });
+        }
+        $('#loadModal').on('show.bs.modal', centerModals);
+        $(window).on('resize', centerModals);
     </script>
 {% endblock %}
