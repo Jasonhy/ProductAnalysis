@@ -150,9 +150,10 @@
                 dataType: 'JSON',
                 success: function (res) {
                     var interval;
+                    base_url = "http://127.0.0.1:8080/";
                     try {
-                        data = JSON.parse(res.data);
                         base_url = "http://127.0.0.1:8080/";
+                        var data = res.data;
                         if (res.status == 1) {
                             $("#loadModal").trigger('click');
                             clearInterval(interval);

@@ -64,7 +64,7 @@ def make_hot_plot(data,p_id):
     if data:
         data = data.split(",")
         dt1 = datetime.datetime.now()
-        temp = list(set(data))[0:-2]
+        temp = list(set(data))
         sub_dates = [(dt1 - datetime.datetime.strptime(dt, '%Y-%m-%d')).days for dt in temp]
         actives = []
         for d in sub_dates:
