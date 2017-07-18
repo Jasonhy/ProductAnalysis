@@ -71,7 +71,7 @@ def make_plot(request):
             pool.close()
             pool.join()
 
-            p_info['p_analysis_imgs'] = [img.get() for img in images]
+            p_info['p_analysis_imgs'] = ["http://127.0.0.1:8080/" + img.get() for img in images]
 
             # 将数据保存到redis
             redis_helper.save_to_redis(p_info)

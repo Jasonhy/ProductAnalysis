@@ -149,16 +149,14 @@
                 },
                 dataType: 'JSON',
                 success: function (res) {
-                    base_url = "http://127.0.0.1:8080/";
                     try {
-                        base_url = "http://127.0.0.1:8080/";
                         var data = res.data;
                         if (res.status == 1) {
                             $("#loadModal").trigger('click');
                             p_imgs = data["p_analysis_imgs"];
-                            $("#img-c").attr('src', base_url + p_imgs[0]);
-                            $("#img-o").attr('src', base_url + p_imgs[1]);
-                            $("#img-h").attr('src', base_url + p_imgs[2]);
+                            $("#img-c").attr('src', p_imgs[0]);
+                            $("#img-o").attr('src', p_imgs[1]);
+                            $("#img-h").attr('src', p_imgs[2]);
                             $("#p-pic").attr('src',data["p_img"]);
                             $("#p-title").text(data['p_title']);
                             $("#p-score").text("总评分: " + data['p_c_score']);
