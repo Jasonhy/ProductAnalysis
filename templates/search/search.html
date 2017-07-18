@@ -149,14 +149,12 @@
                 },
                 dataType: 'JSON',
                 success: function (res) {
-                    var interval;
                     base_url = "http://127.0.0.1:8080/";
                     try {
                         base_url = "http://127.0.0.1:8080/";
                         var data = res.data;
                         if (res.status == 1) {
                             $("#loadModal").trigger('click');
-                            clearInterval(interval);
                             p_imgs = data["p_analysis_imgs"];
                             $("#img-c").attr('src', base_url + p_imgs[0]);
                             $("#img-o").attr('src', base_url + p_imgs[1]);
@@ -168,11 +166,10 @@
                             $("#p-url").attr('href',data["p_url"]);
                         } else {
                             $("#loadModal").trigger('click');
-                            clearInterval(interval);
                             alert(res.error_msg);
                         }
                     }catch (err){
-                        interval = setInterval(get_plot(id,ele), 1000);
+                        get_plot(id,ele)
                     }
                 }
             })

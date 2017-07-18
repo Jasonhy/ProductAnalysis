@@ -46,7 +46,7 @@ def make_plot(request):
     except Exception as e:
         res = None
     if res:
-        p_info = json.loads(res,encoding='utf8')
+        p_info = json.loads(res.decode('utf-8'),encoding='utf8')
     else:
         try:
             product_info = ProductInfo.objects.get(p_id=p_id)
