@@ -10,18 +10,18 @@
 {% block body %}
     <div class="wrapper">
         <!-- Modal -->
-        <div class="modal fade" id="loadModal" role="dialog" data-dismiss="modal">
-            <div class="modal-dialog">
-                <div class="modal-content text-center">
-                    <div class="modal-body">
-                        <img src="{% static 'gif/loading.gif' %}">
-                    </div>
-                    <div class="modal-footer text-center">
-                     数据正在分析中...
-                    </div>
-                </div>
-            </div>
-        </div>
+{#        <div class="modal fade" id="loadModal" role="dialog" data-dismiss="modal">#}
+{#            <div class="modal-dialog">#}
+{#                <div class="modal-content text-center">#}
+{#                    <div class="modal-body">#}
+{#                        <img src="{% static 'gif/loading.gif' %}">#}
+{#                    </div>#}
+{#                    <div class="modal-footer text-center">#}
+{#                     数据正在分析中...#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
         <div class="sidebar">
 
             <div class="sidebar-wrapper">
@@ -57,75 +57,7 @@
             </div>
         </div>
         <div class="main-panel">
-            <nav class="navbar navbar-default navbar-fixed">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand">十万火急终于出来了</a>
-                    </div>
-                    <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="/index/"><p>返回首页</p></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-            </nav>
-
-            <div class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card ">
-                                <div class="clearfix content">
-                                    <div class="p-detail">
-                                        <a id="p-url">
-                                            <img id="p-pic">
-                                        </a>
-                                    </div>
-                                     <div class="p-detail">
-                                         <h3 id="p-title"></h3>
-                                         <p id="p-price"></p>
-                                         <p id="p-score"></p>
-                                     </div>
-                                </div>
-
-                            </div>
-
-                            <div class="card">
-                                <div class="header">
-                                    <p class="category">评价总览:分析评价关键字所占的数量,纵坐标表示数量</p>
-                                </div>
-                                <div class="content">
-                                    <img id="img-o">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="header">
-                                    <p class="category">好评率:根据好中差的数量了进行统计</p>
-                                </div>
-                                <div class="content">
-                                    <img id="img-c">
-                                </div>
-                            </div>
-
-                            <div class="card ">
-                                <div class="header">
-                                    <p class="category">热度:按照最近的评价日期来分析当前产品是否还是热点话题</p>
-                                </div>
-                                <div class="content">
-                                    <img id="img-h">
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+           {% include 'analysis.html' %}
         </div>
     </div>
 
@@ -133,57 +65,87 @@
 
 
 {% block js %}
-    <script>
+    <script type="text/javascript">
         $(function () {
             $("#set_click").trigger('click');
         });
+        function set_img_c(c_p) {
+            if (c_p[0] == 0) {
+                $("#img-c").attr("src", c_p[1]);
+            } else {
+                $("#div-c").html(c_p[1]);
+                exe_script(c_p[0]);
+            }
+        }
+        function set_img_o(o_p) {
+            if (o_p[0] == 0) {
+                $("#img-o").attr("src", o_p[1]);
+            } else {
+                $("#div-o").html(o_p[1]);
+                exe_script(o_p[0]);
+            }
+        }
+        function set_img_h(h_p) {
+            if (h_p[0] == 0) {
+                $("#img-h").attr("src", h_p[1]);
+            } else {
+                $("#div-h").html(h_p[1]);
+                exe_script(h_p[0]);
+            }
+        }
+
         function get_plot(id, ele) {
             $(ele).parent().addClass('active');
             $(ele).parent().siblings().removeClass('active');
             $.ajax({
-                url: '/make_plot/',
-                type: 'POST',
-                data: {
-                    'p_id': id,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'   // csrfmiddlewaretoken添加csrf_token
-                },
+                url: '/get_analysis_res/?p_id=' + id,
+                type: 'GET',
+{#                data: {#}
+{#                    'p_id': id,#}
+{#                    csrfmiddlewaretoken: '{{ csrf_token }}'   // csrfmiddlewaretoken添加csrf_token#}
+{#                },#}
                 dataType: 'JSON',
                 success: function (res) {
-                    try {
-                        var data = res.data;
-                        if (res.status == 1) {
-                            $("#loadModal").trigger('click');
-                            p_imgs = data["p_analysis_imgs"];
-                            $("#img-c").attr('src', p_imgs[0]);
-                            $("#img-o").attr('src', p_imgs[1]);
-                            $("#img-h").attr('src', p_imgs[2]);
-                            $("#p-pic").attr('src',data["p_img"]);
-                            $("#p-title").text(data['p_title']);
-                            $("#p-score").text("总评分: " + data['p_c_score']);
-                            $("#p-price").text("价格: " + data["p_price"]);
-                            $("#p-url").attr('href',data["p_url"]);
-                        } else {
-                            $("#loadModal").trigger('click');
-                            alert(res.error_msg);
-                        }
-                    }catch (err){
-                        get_plot(id,ele)
+                    var data = res.data;
+                    if (res.status == 1) {
+                        var i = 0;
+                        p_imgs = data["p_analysis_imgs"];
+                        c_p = p_imgs[0];
+                        set_img_c(c_p);
+                        o_p = p_imgs[1];
+                        set_img_o(o_p);
+                        h_p = p_imgs[2];
+                        set_img_h(h_p);
+
+                        $("#p-pic").attr('src',data["p_img"]);
+                        $("#p-title").text(data['p_title']);
+                        $("#p-score").text("总评分: " + data['p_c_score']);
+                        $("#p-price").text("价格: " + data["p_price"]);
+                        $("#p-url").attr('href',data["p_url"]);
+
+                    } else {
+                        alert(res.error_msg);
                     }
                 }
             })
         }
 
-        //模态加载框垂直居中
-        function centerModals() {
-            $('#loadModal').each(function (i) {
-                var $clone = $(this).clone().css('display', 'block').appendTo('body');
-                var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
-                top = top > 0 ? top : 0;
-                $clone.remove();
-                $(this).find('.modal-content').css("margin-top", top);
-            });
+        function exe_script(p_script) {
+            p_script = p_script.replace(/<script type="text\/javascript">/,"").replace(/<\/script>/,"");
+            eval(p_script);
         }
-        $('#loadModal').on('show.bs.modal', centerModals);
-        $(window).on('resize', centerModals);
+
+        //模态加载框垂直居中
+{#        function centerModals() {#}
+{#            $('#loadModal').each(function (i) {#}
+{#                var $clone = $(this).clone().css('display', 'block').appendTo('body');#}
+{#                var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);#}
+{#                top = top > 0 ? top : 0;#}
+{#                $clone.remove();#}
+{#                $(this).find('.modal-content').css("margin-top", top);#}
+{#            });#}
+{#        }#}
+{#        $('#loadModal').on('show.bs.modal', centerModals);#}
+{#        $(window).on('resize', centerModals);#}
     </script>
 {% endblock %}

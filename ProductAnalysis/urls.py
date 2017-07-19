@@ -19,7 +19,8 @@ from app import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^index/',views.index),
+    url(r'^$',views.index),
     url(r'^search/', include('haystack.urls')),
     url(r'^make_plot/',views.make_plot),
+    url(r'^get_analysis_res/',views.make_bokeh),
 ]

@@ -1,0 +1,73 @@
+{% extends 'base_bokeh.html' %}
+
+{% block body %}
+     <nav class="navbar navbar-default navbar-fixed">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand">十万火急终于出来了</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="/"><p>返回首页</p></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </nav>
+
+     <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card ">
+                                <div class="clearfix content">
+                                    <div class="p-detail">
+                                        <a id="p-url">
+                                            <img id="p-pic">
+                                        </a>
+                                    </div>
+                                     <div class="p-detail">
+                                         <h3 id="p-title"></h3>
+                                         <p id="p-price"></p>
+                                         <p id="p-score"></p>
+                                     </div>
+                                </div>
+
+                            </div>
+
+                            <div class="card">
+                                <div class="header">
+                                    <p class="category">评价总览:分析评价关键字所占的数量,纵坐标表示数量</p>
+                                </div>
+                                <div class="content" id="div-o">
+                                    <img id="img-o">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="header">
+                                    <p class="category">好评率:根据好中差的数量了进行统计</p>
+                                </div>
+                                <div class="content" id="div-c">
+                                    <img id="img-c">
+                                </div>
+                            </div>
+
+                            <div class="card ">
+                                <div class="header">
+                                    <p class="category">热度:按照最近的评价日期来分析当前产品是否还是热点话题</p>
+                                </div>
+                                <div class="content" id="div-h">
+                                    <img id="img-h">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}

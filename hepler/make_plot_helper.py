@@ -6,6 +6,7 @@ from matplotlib.pylab import mpl
 import datetime
 import pandas as pd
 from hepler import redis_helper,file_hepler
+from bokeh.plotting import figure,show,output_file
 
 mpl.rcParams['font.sans-serif'] = ['SimHei']    # 显示中文
 mpl.rcParams['font.serif'] = ['SimHei']         # 显示中文
@@ -24,6 +25,7 @@ def make_comment_plot(data,p_id):
         values = re.findall(r'(\d+)', temps)
         c_values = [int(value) for value in values]
         c_keys = re.findall('[\u4e00-\u9fa5]+', temps)
+        print(c_keys)
         s = pd.Series(c_values, index=c_keys,name='好评率')
         s = s[3:6]
         s_sum = s.sum()
@@ -49,6 +51,7 @@ def make_overview_plot(data,p_id):
         c_keys = re.findall('[\u4e00-\u9fa5]+', temps)
         s = pd.Series(c_values, index=c_keys)
         s.plot.bar(figsize=(6, 8), fontsize=8)
+
         plt.savefig("static/upload/%s_o.png" % p_id,dpi=90)
         plt.close()
         return file_hepler.get_image_path("%s_o.png" % p_id)
