@@ -60,4 +60,4 @@ def animate(i):
     return [patch, ]
 
 ani = animation.FuncAnimation(fig, animate, 100, repeat=False, blit=True)
-ani.save('loading.gif',fps=2, writer='imagemagick')
+ani.save('loading1.gif',fps=2, writer='imagemagick')

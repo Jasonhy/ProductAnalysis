@@ -14,7 +14,7 @@
 {#            <div class="modal-dialog">#}
 {#                <div class="modal-content text-center">#}
 {#                    <div class="modal-body">#}
-{#                        <img src="{% static 'gif/loading.gif' %}">#}
+{#                        <img src="{% static 'gif/loading1.gif' %}">#}
 {#                    </div>#}
 {#                    <div class="modal-footer text-center">#}
 {#                     数据正在分析中...#}
@@ -56,7 +56,7 @@
                 {% endif %}
             </div>
         </div>
-        <div class="main-panel">
+        <div class="main-panel" id="p-content">
            {% include 'analysis.html' %}
         </div>
     </div>
@@ -95,6 +95,13 @@
         }
 
         function get_plot(id, ele) {
+            //加载动画
+            var load = new Loading();
+			load.init({
+				target: "#p-content"
+			});
+			load.start();
+
             $(ele).parent().addClass('active');
             $(ele).parent().siblings().removeClass('active');
             $.ajax({
@@ -106,6 +113,7 @@
 {#                },#}
                 dataType: 'JSON',
                 success: function (res) {
+                    load.stop();
                     var data = res.data;
                     if (res.status == 1) {
                         var i = 0;
