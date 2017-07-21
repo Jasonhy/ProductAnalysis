@@ -71,7 +71,7 @@
         });
         function set_img_c(c_p) {
             if (c_p[0] == 0) {
-                $("#img-c").attr("src", c_p[1]);
+                $("#img-c").attr("src", "/static/upload/no_good_comments.png");
             } else {
                 $("#div-c").html(c_p[1]);
                 exe_script(c_p[0]);
@@ -79,7 +79,7 @@
         }
         function set_img_o(o_p) {
             if (o_p[0] == 0) {
-                $("#img-o").attr("src", o_p[1]);
+                $("#img-o").attr("src", "/static/upload/no_overview.png");
             } else {
                 $("#div-o").html(o_p[1]);
                 exe_script(o_p[0]);
@@ -87,7 +87,7 @@
         }
         function set_img_h(h_p) {
             if (h_p[0] == 0) {
-                $("#img-h").attr("src", h_p[1]);
+                $("#img-h").attr("src", "/static/upload/no_hot.png");
             } else {
                 $("#div-h").html(h_p[1]);
                 exe_script(h_p[0]);
