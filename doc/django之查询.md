@@ -179,6 +179,36 @@
             {'cardinfo__count': 3}
 
 
+>   序列化之JSON,一般情况,希望查出的数据就能直接进行数据传输,而不需要再次封装,这个时候可以直接序列化
+
+        如:序列化帖子的所有信息
+
+            >>> from django.core import serializers
+            >>> import json
+            >>> card_info = json.loads(serializers.serialize('json',CardInfo.objects.all()),encoding='utf8')
+            >>> card_info
+            [{'model': 'app.cardinfo', 'pk': 1, 'fields': {'title': '什么发型好看', 'content': '想剪个头发,但是不知道哪里剪得好看', 'ui_id': 1, 'ci_id': 3, 'create_time': '2017-07-21T01:15:32.852Z'}}, {'model': 'app.cardinfo', 'pk': 2, 'fiel
+            ds': {'title': '美发学院活动', 'content': '今天美发学院做活动,凡是到场的将送本公司精美礼品一份', 'ui_id': 4, 'ci_id': 1, 'create_time': '2017-07-21T01:17:31.075Z'}}, {'model': 'app.cardinfo', 'pk': 3, 'fields': {'title': '杀马特'
+            , 'content': '现在做个杀马特怎么样', 'ui_id': 3, 'ci_id': 2, 'create_time': '2017-07-21T01:18:12.834Z'}}, {'model': 'app.cardinfo', 'pk': 4, 'fields': {'title': '锅盖头', 'content': '每次看到那些锅盖头的帅锅,都感觉好别扭', 'ui_id
+            ': 5, 'ci_id': 1, 'create_time': '2017-07-21T01:19:43.964Z'}}, {'model': 'app.cardinfo', 'pk': 5, 'fields': {'title': '脸型是圆', 'content': '圆脸适合什么样的发型呢?', 'ui_id': 2, 'ci_id': 2, 'create_time': '2017-07-21T05:29:43.7
+            99Z'}}, {'model': 'app.cardinfo', 'pk': 6, 'fields': {'title': '超卷发好看吗', 'content': '每次看到那些很卷的发型,第一感觉就是方便面,这种发型真的好看吗?为什么会有这么多人喜欢呢?', 'ui_id': 5, 'ci_id': 2, 'create_time': '2017-07-2
+            1T06:19:17.451Z'}}]
+
+        如果只想序列化一部分字段,可以通过fields来指定
+
+            >>> card_info = json.loads(serializers.serialize('json',CardInfo.objects.all(),fields=('title','content','create_time')),encoding='utf8')
+            >>> card_info
+            [{'model': 'app.cardinfo', 'pk': 1, 'fields': {'title': '什么发型好看', 'content': '想剪个头发,但是不知道哪里剪得好看', 'create_time': '2017-07-21T01:15:32.852Z'}}, {'model': 'app.cardinfo', 'pk': 2, 'fields': {'title': '美发学院
+            活动', 'content': '今天美发学院做活动,凡是到场的将送本公司精美礼品一份', 'create_time': '2017-07-21T01:17:31.075Z'}}, {'model': 'app.cardinfo', 'pk': 3, 'fields': {'title': '杀马特', 'content': '现在做个杀马特怎么样', 'create_tim
+            e': '2017-07-21T01:18:12.834Z'}}, {'model': 'app.cardinfo', 'pk': 4, 'fields': {'title': '锅盖头', 'content': '每次看到那些锅盖头的帅锅,都感觉好别扭', 'create_time': '2017-07-21T01:19:43.964Z'}}, {'model': 'app.cardinfo', 'pk': 5
+            , 'fields': {'title': '脸型是圆', 'content': '圆脸适合什么样的发型呢?', 'create_time': '2017-07-21T05:29:43.799Z'}}, {'model': 'app.cardinfo', 'pk': 6, 'fields': {'title': '超卷发好看吗', 'content': '每次看到那些很卷的发型,第一感
+            觉就是方便面,这种发型真的好看吗?为什么会有这么多人喜欢呢?', 'create_time': '2017-07-21T06:19:17.451Z'}}]
+
+
+
+
+
+
 
 
 
