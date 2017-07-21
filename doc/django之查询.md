@@ -172,7 +172,13 @@
             >>> cardinfo.ci_id
             <CircleInfo: id=1,circle_name=时尚潮流>
 
-        extra():执行原生SQL查询语句,这种查询尽量不要使用字符串拼接的方式,因为这样有可能会导致注入攻击,尽量通过参数的形式进行传递
+        aggregate():聚合查询,返回的是一个字典
+
+            如:
+            >>> CircleInfo.objects.filter(id=2).aggregate(Count("cardinfo"))
+            {'cardinfo__count': 3}
+
+
 
 
 
