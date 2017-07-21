@@ -149,7 +149,33 @@
             <QuerySet [<CircleInfo: id=1,circle_name=时尚潮流>, <CircleInfo: id=4,circle_name=销售管理>]>
 
 
->   聚合函数:
+>   其他常用API:
+
+        values():迭代返回的是一个字典
+
+            如:
+            >>> obj.values()
+            <QuerySet [{'id': 1, 'circle_name': '时尚潮流'}, {'id': 2, 'circle_name': '造型视觉'}, {'id': 3, 'circle_name': '爱美剪发'}, {'id': 4, 'circle_name': '销售管理'}, {'id': 5, 'circle_name': '染发色彩'}]>
+            >>> for o in obj.values():
+            ...     type(o)
+            ...
+            <class 'dict'>
+            <class 'dict'>
+            <class 'dict'>
+            <class 'dict'>
+            <class 'dict'>
+
+        select_related():有的时候在查询数据的时候,会用到关联表数据,而这些数据在后面的也会用到,这个时候就可以通过这个函数进行关联查询,这种查询虽然会影响到性能的损耗,但是在接下来的应用都将不会操作数据库
+
+            如:
+            >>> cardinfo = CardInfo.objects.select_related("ci_id").get(id=2)
+            >>> cardinfo.ci_id
+            <CircleInfo: id=1,circle_name=时尚潮流>
+
+        extra():执行原生SQL查询语句,这种查询尽量不要使用字符串拼接的方式,因为这样有可能会导致注入攻击,尽量通过参数的形式进行传递
+
+
+
 
 
 
