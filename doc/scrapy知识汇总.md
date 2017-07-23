@@ -163,6 +163,73 @@ Response,可以说,这个时候完成了一次请求,这个时候有两种情况
 
             close_spider():当spider关闭的时候,会调用,比如,在进行数据保存完成之后,可以在这里执行数据库关闭操作
 
+## 关于Downloader Middleware
+介于request和response之间,主要用来全局修改request和response
+
+    >   常用函数:
+        process_request():每个request通过下载中间件时,该方法都会被调用
+
+            关于返回值:
+            1.如果返回的是None,将会继续处理该request
+            2.如果返回的是Response对象,scrapy将不会调用其他的process_request或者process_exception方法,然后将返回该response
+            3.如果返回Request对象,scrapy则停止调用process_request方法,并重新调度返回的request
+            4.如果抛出异常,测process_exception会被调用
+
+            关于参数:
+                request:需要处理的request
+                spider:request对应的spider
+
+        process_response():
+            关于返回值:
+            1.如果返回的是一个Response,该response会被下一个中间件继续执行
+            2.如果返回一个Request,中间件链会停止,返回的request会被重新调度下载
+            3.如果抛出异常,则会调用request的errback
+
+        关于内置的中间件可以查看文档,比如CookiesMiddleware,HttpProxyMiddleware等
+
+## 关于Spider Middleware
+可以在这里添加代码来处理发送给Spider的response及spider产生的item和request
+
+    >   常用函数:
+        process_spider_input():当response通过spider中间件时,这个方法会被调用,处理该response
+
+        关于返回值:
+        1.如果返回None,scrapy将继续处理该response
+        2.如果抛出异常,则会调用request的errback,errback指向的是process_spider_output()来处理,如果这个方法也抛出异常,则会调用process_spider_exception()
+
+        process_spider_output():处理response返回result时,该方法会被调用
+
+        process_start_requests():以spider启动的request为参数被调用
+
+## 关于Requests 和 Responses
+
+    >   Request对象:
+        有关参数:
+            url:请求的url
+            callback:请求返回的Response,由哪个函数处理
+            method:指定请求方式
+            headers:添加请求头信息
+            meta:不同请求之间数据传递
+            encoding:默认utf8
+            cookies:请求的cookies
+            dont_filter:表明该请求不由调度器过滤,默认就是False
+            errback:指定处理错误函数
+
+    >   Response对象:
+        有关参数:
+            url:响应的url
+            status:响应状态码
+            headers:响应头
+            request:生成此响应的请求头
+
+## 关于settings
+关于settings的配置,可以查看官方文档
+
+
+
+
+
+
 
 
 

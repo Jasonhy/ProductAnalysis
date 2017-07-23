@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 import json
-from hepler import make_bokeh_hepler
+from hepler import make_bokeh_hepler,make_plot_helper
 from app.models import ProductInfo
 from multiprocessing import Pool
 from hepler import redis_helper, log_helper

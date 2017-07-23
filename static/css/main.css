@@ -297,3 +297,11 @@ font-size: 21px;
 font-size: 12.642px;
 }
 }
+
+.bk-plot-layout,.bk-plot-wrapper,.bk-canvas-wrapper,.bk-canvas{
+    width: 100% !important;
+}
+.bk-root .bk-toolbar-right{
+    display: none !important;
+}
+

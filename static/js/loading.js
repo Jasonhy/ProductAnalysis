@@ -49,8 +49,9 @@
 				ch = Math.max($(target).height(), $(window).height());
 				cw = Math.max($(target).width(), $(window).width());
 			}
-			loading.height(ch).width(cw);
-			loading.find('div').height(ch).width(cw);
+			if(loading != null){
+				loading.height(ch).width(cw);
+				loading.find('div').height(ch).width(cw);
 			if (ch < 100) {
 				loading.find('i').height(ch).width(ch);
 			}
@@ -77,6 +78,10 @@
 				top: top,
 				left: left
 			})
+			};
+
+
+
 		},
 		init: function (settings) {
 			settings = settings || {};

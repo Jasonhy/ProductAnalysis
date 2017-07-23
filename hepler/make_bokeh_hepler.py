@@ -42,7 +42,7 @@ def make_overview_bokeh(data):
         s = pd.Series(c_values, index=c_keys)
         data = s
         # 创建一个新的含有标题和轴标签的窗口在线窗口
-        p = Bar(data,title="总览图", ylabel='关键字数量', width=400, height=400,legend=None,tools=TOOLS)
+        p = Bar(data,title="总览图", ylabel='关键字数量', width=400, height=400,legend=None,tools="")
         script, div = components(p, CDN)
 
         return [script, div]
@@ -60,7 +60,7 @@ def make_hot_bokeh(data):
         s = pd.Series(sub_dates, [datetime.datetime.strptime(dt, '%Y-%m-%d') for dt in temp])
         s = s.sort_index(ascending=False)
 
-        p = figure(x_axis_type="datetime", tools=TOOLS,title="热度", x_axis_label='日期', y_axis_label='天数',width=400, height=400)
+        p = figure(x_axis_type="datetime", tools="",title="热度", x_axis_label='日期', y_axis_label='天数',width=400, height=400)
 
         p.line(s.index,s.values, legend="距离当前天数", line_width=2)
 
