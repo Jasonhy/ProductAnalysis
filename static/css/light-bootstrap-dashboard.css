@@ -492,7 +492,8 @@ body > .navbar-collapse[data-color="purple"]:after {
 
 .sidebar,
 .main-panel {
-  overflow: auto;
+  overflow: hidden;
+  overflow-y: auto;
   max-height: 100%;
   height: 100%;
   -webkit-transition-property: top,bottom;
