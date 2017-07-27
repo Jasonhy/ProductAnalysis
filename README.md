@@ -27,6 +27,8 @@
     3.前端数据分析展示通过bokeh来实现
 
     4.数据分析用的是pandas
+    
+    5.通过redis进行缓存处理
 
 ##  首页
 ![](./screen/index.png)
