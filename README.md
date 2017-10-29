@@ -14,7 +14,7 @@
 
     2.同步数据库:python manage.py makemigrations 和 python manage.py migrate
 
-    3.进入app/ProductData/spiders目录,执行:scrapy crawl zol
+    3.进入app/ProductData,执行:run.py
 
     等待执行结束就可以了
 
