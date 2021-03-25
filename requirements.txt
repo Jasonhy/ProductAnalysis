@@ -35,7 +35,7 @@ pyOpenSSL==17.1.0
 pyparsing==2.2.0
 python-dateutil==2.6.1
 pytz==2017.2
-PyYAML==3.12
+PyYAML==5.4
 queuelib==1.4.2
 redis==2.10.5
 requests==2.18.1
