@@ -10,7 +10,7 @@ constantly==15.1.0
 cryptography==1.9
 cssselect==1.0.1
 cycler==0.10.0
-Django==1.10.6
+Django==2.2.24
 django-haystack==2.6.1
 gunicorn==19.7.1
 hyperlink==17.2.1
