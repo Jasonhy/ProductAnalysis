@@ -21,7 +21,7 @@ Jinja2==2.9.6
 lxml==3.8.0
 MarkupSafe==1.0
 matplotlib==2.0.2
-numpy==1.13.1
+numpy==1.22.0
 pandas==0.20.3
 parsel==1.2.0
 pkg-resources==0.0.0
