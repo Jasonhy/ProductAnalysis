@@ -3,7 +3,7 @@ attrs==17.2.0
 Automat==0.6.0
 bkcharts==0.2
 bokeh==0.12.6
-certifi==2017.4.17
+certifi==2022.12.7
 cffi==1.10.0
 chardet==3.0.4
 constantly==15.1.0
